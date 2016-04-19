@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                                     bLogin.setEnabled(true);
                                 }
                             });
+                            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
