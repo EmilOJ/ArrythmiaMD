@@ -50,4 +50,13 @@
         android:layout_below="@+id/bLogin"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="go"
+        android:id="@+id/goButton"
+        android:layout_below="@+id/bLogin"
+        android:layout_centerHorizontal="true" />
+
+
 </RelativeLayout>

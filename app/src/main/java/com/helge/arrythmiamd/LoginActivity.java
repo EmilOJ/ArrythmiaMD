@@ -1,5 +1,6 @@
 package com.helge.arrythmiamd;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +23,18 @@ public class LoginActivity extends AppCompatActivity {
         final EditText etPassword = (EditText) findViewById(R.id.etPassword);
         final Button bLogin = (Button) findViewById(R.id.bLogin);
         final ProgressBar spinner = (ProgressBar) findViewById(R.id.progressBar);
+        final Button goButton = (Button) findViewById(R.id.goButton);
+
+        assert goButton != null;
+
+        goButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, ChoosePatientActivity.class);
+                startActivity(i);
+            }
+        });
+
 
         assert bLogin != null;
         bLogin.setOnClickListener(new View.OnClickListener() {
