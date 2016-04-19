@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ArrythmiaMD</string>
+    <string name="cpr_nr">CPR-number</string>
+
 </resources>

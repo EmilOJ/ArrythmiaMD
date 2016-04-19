@@ -9,4 +9,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.helge.arrythmiamd.ChoosePatientActivity">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose patient" />
+
+        <EditText
+            android:id="@+id/current_patient"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/cpr_nr"
+            android:inputType="number" />
+
 </RelativeLayout>
