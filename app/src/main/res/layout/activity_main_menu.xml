@@ -9,4 +9,36 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.helge.arrythmiamd.MainMenuActivity">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Patient Info"
+        android:id="@+id/patientinfo_button"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="124dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Patient Notes"
+        android:id="@+id/patientnotes_button"
+        android:layout_below="@+id/patientinfo_button"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Arrhythmias"
+        android:id="@+id/arrhythmias_button"
+        android:layout_below="@+id/patientnotes_button"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Statistics"
+        android:id="@+id/statistics_button"
+        android:layout_below="@+id/arrhythmias_button"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
