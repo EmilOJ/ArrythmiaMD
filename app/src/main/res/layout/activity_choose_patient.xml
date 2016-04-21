@@ -12,13 +12,37 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose patient" />
+            android:text="@string/choose_patient"
+            android:id="@+id/textView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="71dp" />
 
         <EditText
             android:id="@+id/current_patient"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/cpr_nr"
-            android:inputType="number" />
+            android:inputType="number"
+            android:layout_marginTop="48dp"
+            android:layout_below="@+id/textView"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_done"
+            android:id="@+id/choose_done"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/go_2"
+            android:id="@+id/goButton2"
+            android:layout_below="@+id/choose_done"
+            android:layout_alignStart="@+id/choose_done"
+            android:layout_marginTop="60dp" />
 
 </RelativeLayout>
