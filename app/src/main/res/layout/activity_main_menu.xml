@@ -41,4 +41,12 @@
         android:id="@+id/statistics_button"
         android:layout_below="@+id/arrhythmias_button"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ECG"
+        android:id="@+id/ECGButton"
+        android:layout_below="@+id/statistics_button"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
