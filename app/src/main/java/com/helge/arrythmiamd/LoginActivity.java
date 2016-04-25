@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button goButton = (Button) findViewById(R.id.goButton);
 
         assert goButton != null;
+        fetchNotes();
 
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override

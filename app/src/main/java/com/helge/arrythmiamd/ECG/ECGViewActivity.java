@@ -34,27 +34,35 @@ public class ECGViewActivity extends AppCompatActivity {
     InputStream is;
 
 
+    public DataPoint[] getmDataPoints() {
+        return mDataPoints;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ecgview);
-
-        progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             mECG_ID = extras.getString("ECG_ID");
         }
 
-        inAnimation = new AlphaAnimation(0f, 1f);
-        inAnimation.setDuration(200);
-        progressBarHolder.setAnimation(inAnimation);
-        progressBarHolder.setVisibility(View.VISIBLE);
-
         loadECGData();
+
+
+
+        setContentView(R.layout.activity_ecgview);
+
+//        progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
+//        inAnimation = new AlphaAnimation(0f, 1f);
+//        inAnimation.setDuration(200);
+//        progressBarHolder.setAnimation(inAnimation);
+//        progressBarHolder.setVisibility(View.VISIBLE);
+
+
     }
 
-    private void loadECGData() {
+    public DataPoint[] loadECGData() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ECG");
         query.fromLocalDatastore();
 
@@ -66,26 +74,22 @@ public class ECGViewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        outAnimation = new AlphaAnimation(1f, 0f);
-        outAnimation.setDuration(200);
-        progressBarHolder.setAnimation(outAnimation);
-        progressBarHolder.setVisibility(View.GONE);
+//        outAnimation = new AlphaAnimation(1f, 0f);
+//        outAnimation.setDuration(200);
+//        progressBarHolder.setAnimation(outAnimation);
+//        progressBarHolder.setVisibility(View.GONE);
 
         List<String> items = Arrays.asList(mDataString.split("\n"));
-
-        mDataPoints = new DataPoint[items.size()];
+        List<DataPoint> mDataPointsList = new ArrayList<>();
         int counter = 0;
-        for (String item : items) {
-            if (counter > 0) {
-                String[] dataPointString = item.split(",");
-                mDataPoints[counter] = new DataPoint(counter, Double.parseDouble(dataPointString[1]));
-            }
+
+        for (int i=1; i < items.size(); i = i + 5) {
+            String[] dataPointString = items.get(i).split(",");
+            mDataPointsList.add(new DataPoint(counter, Double.parseDouble(dataPointString[1])));
             counter++;
         }
-        Toast.makeText(ECGViewActivity.this, "asd", Toast.LENGTH_SHORT).show();
-    }
 
-    public DataPoint[] getmDataPoints() {
+        mDataPoints = mDataPointsList.toArray(new DataPoint[mDataPointsList.size()]);
         return mDataPoints;
     }
 }
