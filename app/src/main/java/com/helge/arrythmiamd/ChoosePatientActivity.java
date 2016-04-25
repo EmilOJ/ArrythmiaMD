@@ -27,9 +27,9 @@ public class ChoosePatientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_patient);
 
-        EditText current_patient = (EditText) findViewById(R.id.current_patient);
+        final EditText current_patient = (EditText) findViewById(R.id.current_patient);
 
-        assert current_patient != null;
+
         //final double patient = Double.parseDouble(current_patient.getText().toString());
 
 
@@ -55,15 +55,18 @@ public class ChoosePatientActivity extends AppCompatActivity {
         });
 
         // Should be moved just below onClick, as it is not "filled out" prior to this
-        final String patient = current_patient.getText()+"";
 
         choose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                assert current_patient != null;
+                final String patient = current_patient.getText()+"";
+
+
 
                 // "1111001111" will be replaced with the variable patient´
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("Name");
-                query.whereEqualTo("cpr-nr", patient);
+                query.whereEqualTo("CPR", patient);
                 query.getFirstInBackground(new GetCallback<ParseObject>() {
 
 
