@@ -1,10 +1,8 @@
 package com.helge.arrythmiamd.ECG;
 
-import android.os.Handler;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +12,10 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.util.Random;
+import java.util.ArrayList;
 
 public class graphFragment extends Fragment {
+    private static DataPoint[] mDataPoints;
 
     @Nullable
     @Override
@@ -24,6 +23,8 @@ public class graphFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.activity_graph_fragment, container, false);
 
         GraphView ECGgraph = (GraphView) rootView.findViewById(R.id.graph);
+
+        mDataPoints = ((ECGViewActivity) getActivity()).getmDataPoints();
 
 
         LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>(new DataPoint[] {
@@ -69,8 +70,10 @@ public class graphFragment extends Fragment {
                 new DataPoint(39, 5)
         });
 
+        LineGraphSeries<DataPoint> series3 = new LineGraphSeries<DataPoint>(mDataPoints);
 
-        ECGgraph.addSeries(series2);
+
+        ECGgraph.addSeries(series3);
 
         ECGgraph.getViewport().setScrollable(true);
         ECGgraph.getViewport().setScalable(true);

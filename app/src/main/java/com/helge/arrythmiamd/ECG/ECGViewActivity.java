@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.helge.arrythmiamd.R;
 import com.jjoe64.graphview.series.DataPoint;
@@ -29,8 +30,7 @@ public class ECGViewActivity extends AppCompatActivity {
     private String mDataString;
     private String mECG_ID = "";
 
-
-    ArrayList<DataPoint> mDataPoints = new ArrayList<DataPoint>();
+    private DataPoint[] mDataPoints;
     InputStream is;
 
 
@@ -73,20 +73,20 @@ public class ECGViewActivity extends AppCompatActivity {
 
         List<String> items = Arrays.asList(mDataString.split("\n"));
 
-
+        mDataPoints = new DataPoint[items.size()];
         int counter = 0;
         for (String item : items) {
             if (counter > 0) {
                 String[] dataPointString = item.split(",");
-                mDataPoints.add(new DataPoint(counter, Double.parseDouble(dataPointString[1])));
+                mDataPoints[counter] = new DataPoint(counter, Double.parseDouble(dataPointString[1]));
             }
             counter++;
         }
+        Toast.makeText(ECGViewActivity.this, "asd", Toast.LENGTH_SHORT).show();
     }
 
-    public ArrayList<DataPoint> getmDataPoints() {
+    public DataPoint[] getmDataPoints() {
         return mDataPoints;
     }
-
 }
 
