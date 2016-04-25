@@ -5,25 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.helge.arrythmiamd.R;
 import com.jjoe64.graphview.series.DataPoint;
-import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,6 +28,9 @@ public class ECGViewActivity extends AppCompatActivity {
     private File mCSVfile;
     private String mDataString;
     private String mECG_ID = "";
+
+
+    ArrayList<DataPoint> mDataPoints = new ArrayList<DataPoint>();
     InputStream is;
 
 
@@ -58,9 +52,6 @@ public class ECGViewActivity extends AppCompatActivity {
         progressBarHolder.setVisibility(View.VISIBLE);
 
         loadECGData();
-
-
-
     }
 
     private void loadECGData() {
@@ -81,16 +72,21 @@ public class ECGViewActivity extends AppCompatActivity {
         progressBarHolder.setVisibility(View.GONE);
 
         List<String> items = Arrays.asList(mDataString.split("\n"));
-        ArrayList<DataPoint> dataPoints = new ArrayList<DataPoint>();
+
 
         int counter = 0;
         for (String item : items) {
             if (counter > 0) {
                 String[] dataPointString = item.split(",");
-                dataPoints.add(new DataPoint(counter, Double.parseDouble(dataPointString[1])));
+                mDataPoints.add(new DataPoint(counter, Double.parseDouble(dataPointString[1])));
             }
             counter++;
         }
     }
+
+    public ArrayList<DataPoint> getmDataPoints() {
+        return mDataPoints;
+    }
+
 }
 
