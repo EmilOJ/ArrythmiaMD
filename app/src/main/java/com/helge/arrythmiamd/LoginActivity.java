@@ -8,9 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -69,5 +76,24 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void fetchNotes() {
+        ParseQuery<ParseObject> query_ECG = ParseQuery.getQuery("ECG");
+        ParseQuery<ParseObject> query_notes = ParseQuery.getQuery("Note");
+        query_ECG.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                ParseObject.pinAllInBackground(objects);
+            }
+        });
+
+        query_notes.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                ParseObject.pinAllInBackground(objects);
+            }
+        });
+
     }
 }

@@ -47,8 +47,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ECG.ECGViewActivity" android:screenOrientation="landscape"/>
-        <activity android:name=".ECG.graphFragment"></activity>
+        <activity
+            android:name=".ECG.ECGViewActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".ECG.graphFragment" />
+        <activity android:name=".ECG.ECGListActivity"></activity>
     </application>
 
 </manifest>
