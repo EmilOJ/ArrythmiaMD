@@ -25,38 +25,22 @@ import android.content.Intent;
 import java.util.List;
 
 public class ChoosePatientActivity extends AppCompatActivity {
+    String patientCPR;
+    Button choose;
+    EditText current_patientEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_patient);
 
-        final EditText current_patientEditText = (EditText) findViewById(R.id.current_patient);
+        current_patientEditText = (EditText) findViewById(R.id.current_patient);
+        current_patientEditText.setText("111100-1111");
+
+        choose = (Button) findViewById(R.id.choose_done);
 
 
-        //final double patient = Double.parseDouble(current_patient.getText().toString());
 
-
-
-        //double patient = 0;
-        //final string patient = Double.parseDouble(current_patient.getText().toString().replace(",", ""));
-
-
-        Button choose = (Button) findViewById(R.id.choose_done);
-
-        assert choose != null;
-
-        // Cheat button to move to Main Menu
-        final Button goButton2 = (Button) findViewById(R.id.goButton2);
-        assert goButton2 != null;
-
-        goButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ChoosePatientActivity.this, MainMenuActivity.class);
-                startActivity(i);
-            }
-        });
 
         // limit cpr-number input to 10 characters
         InputFilter[] fa= new InputFilter[1];
@@ -78,6 +62,7 @@ public class ChoosePatientActivity extends AppCompatActivity {
                     current_patientEditText.setText(str);
                     current_patientEditText.setSelection(str.length());
                 }
+                patientCPR = current_patientEditText.getText().toString();
             }
 
             @Override
@@ -88,14 +73,11 @@ public class ChoosePatientActivity extends AppCompatActivity {
 
         choose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 assert current_patientEditText != null;
-                final String patient = current_patientEditText.getText() + "";
+                patientCPR = current_patientEditText.getText().toString();
 
-
-                // "1111001111" will be replaced with the variable patient´
                 ParseQuery<ParseUser> query = ParseUser.getQuery();
-                query.whereEqualTo("CPR", 1111001111);
+                query.whereEqualTo("CPR", patientCPR);
 
                 query.findInBackground(new FindCallback<ParseUser>() {
                     @Override
@@ -109,7 +91,6 @@ public class ChoosePatientActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(ChoosePatientActivity.this, "Patient not found", Toast.LENGTH_SHORT).show();
                             }
-
                         } else {
                             // Something went wrong.
                             Toast.makeText(ChoosePatientActivity.this, "Could not connect to database", Toast.LENGTH_SHORT).show();
