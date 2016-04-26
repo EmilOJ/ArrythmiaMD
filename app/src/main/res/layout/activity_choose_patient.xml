@@ -26,7 +26,7 @@
             android:inputType="number"
             android:layout_marginTop="48dp"
             android:layout_below="@+id/textView"
-            android:maxLength="10"
+            android:maxLength="11"
             android:layout_alignParentStart="true" />
 
         <Button
@@ -36,14 +36,5 @@
             android:id="@+id/choose_done"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/go_2"
-            android:id="@+id/goButton2"
-            android:layout_below="@+id/choose_done"
-            android:layout_alignStart="@+id/choose_done"
-            android:layout_marginTop="60dp" />
 
 </RelativeLayout>
