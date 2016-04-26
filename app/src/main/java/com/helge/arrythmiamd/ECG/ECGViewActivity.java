@@ -23,7 +23,6 @@ import java.util.List;
 public class ECGViewActivity extends AppCompatActivity {
     private ParseObject mECGObject;
     private ParseFile mECGdata_csv;
-    private FrameLayout progressBarHolder;
     private AlphaAnimation inAnimation;
     private AlphaAnimation outAnimation;
     private File mCSVfile;
@@ -48,16 +47,7 @@ public class ECGViewActivity extends AppCompatActivity {
         }
 
         loadECGData();
-
-
-
         setContentView(R.layout.activity_ecgview);
-
-//        progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
-//        inAnimation = new AlphaAnimation(0f, 1f);
-//        inAnimation.setDuration(200);
-//        progressBarHolder.setAnimation(inAnimation);
-//        progressBarHolder.setVisibility(View.VISIBLE);
 
 
     }
@@ -74,10 +64,6 @@ public class ECGViewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-//        outAnimation = new AlphaAnimation(1f, 0f);
-//        outAnimation.setDuration(200);
-//        progressBarHolder.setAnimation(outAnimation);
-//        progressBarHolder.setVisibility(View.GONE);
 
         List<String> items = Arrays.asList(mDataString.split("\n"));
         List<DataPoint> mDataPointsList = new ArrayList<>();
