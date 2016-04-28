@@ -7,6 +7,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.helge.arrythmiamd.Models.ECGRecording;
 import com.helge.arrythmiamd.R;
 import com.jjoe64.graphview.series.DataPoint;
 import com.parse.ParseException;
@@ -21,13 +22,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ECGViewActivity extends AppCompatActivity {
-    private ParseObject mECGObject;
-    private ParseFile mECGdata_csv;
-    private AlphaAnimation inAnimation;
-    private AlphaAnimation outAnimation;
-    private File mCSVfile;
+    private List<Double> mECGdata = new ArrayList<Double>();
     private String mDataString;
-    private String mECG_ID = "";
+    public ECGRecording mEcgRecording;
+
+
 
     private DataPoint[] mDataPoints;
     InputStream is;
@@ -41,42 +40,25 @@ public class ECGViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mECG_ID = extras.getString("ECG_ID");
+            String ECG_ID = extras.getString("ECG_ID");
+            loadECGData(ECG_ID);
         }
 
-        loadECGData();
         setContentView(R.layout.activity_ecgview);
-
-
     }
 
-    public DataPoint[] loadECGData() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("ECG");
-        query.fromLocalDatastore();
+    public void loadECGData(String id) {
+        ParseQuery<ECGRecording> query = ParseQuery.getQuery(ECGRecording.class);
 
         try {
-            mECGObject = query.get(mECG_ID);
-            mECGdata_csv = mECGObject.getParseFile("data");
-            mDataString = new String (mECGdata_csv.getData());
+            mEcgRecording = query.get(id);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
-        List<String> items = Arrays.asList(mDataString.split("\n"));
-        List<DataPoint> mDataPointsList = new ArrayList<>();
-        int counter = 0;
-
-        for (int i=1; i < items.size(); i = i + 5) {
-            String[] dataPointString = items.get(i).split(",");
-            mDataPointsList.add(new DataPoint(counter, Double.parseDouble(dataPointString[1])));
-            counter++;
-        }
-
-        mDataPoints = mDataPointsList.toArray(new DataPoint[mDataPointsList.size()]);
-        return mDataPoints;
     }
 }
 

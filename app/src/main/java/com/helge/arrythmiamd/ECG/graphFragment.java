@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.helge.arrythmiamd.Models.ECGRecording;
 import com.helge.arrythmiamd.R;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class graphFragment extends Fragment {
     private static DataPoint[] mDataPoints;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -25,9 +27,9 @@ public class graphFragment extends Fragment {
 
         GraphView ECGgraph = (GraphView) rootView.findViewById(R.id.graph);
 
-        mDataPoints = ((ECGViewActivity) getActivity()).getmDataPoints();
+        mDataPoints = ((ECGViewActivity) getActivity()).mEcgRecording.asDataPoints();
 
-        LineGraphSeries<DataPoint> AF_series = new LineGraphSeries<DataPoint>(new DataPoint[] {
+        LineGraphSeries<DataPoint> AF_series = new LineGraphSeries<DataPoint>(new DataPoint[]{
                 new DataPoint(11, 2),
                 new DataPoint(12, 2),
                 new DataPoint(13, 2),
@@ -50,7 +52,7 @@ public class graphFragment extends Fragment {
         });
         ECGgraph.addSeries(AF_series);
 
-        LineGraphSeries<DataPoint> VT_series = new LineGraphSeries<DataPoint>(new DataPoint[] {
+        LineGraphSeries<DataPoint> VT_series = new LineGraphSeries<DataPoint>(new DataPoint[]{
                 new DataPoint(76, 2),
                 new DataPoint(77, 2),
                 new DataPoint(78, 2),
@@ -84,7 +86,6 @@ public class graphFragment extends Fragment {
 
         VT_series.setDrawBackground(true); // activate the background feature
         VT_series.setBackgroundColor(Color.argb(50, 0, 200, 200));
-
 
 
         ECGgraph.getViewport().setScrollable(true);

@@ -21,8 +21,7 @@ public class ECGAdapter extends ParseQueryAdapter {
     public ECGAdapter(Context context) {
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery create() {
-                ParseQuery query = new ParseQuery("ECG");
-
+                ParseQuery query = new ParseQuery("ECGRecording");
                 return query;
             }
         });
