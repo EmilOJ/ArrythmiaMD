@@ -17,7 +17,7 @@ public class Arrhythmia extends ParseObject {
     public Arrhythmia() {
     }
 
-    public Arrhythmia(double start, double stop, String type) {
+    public Arrhythmia(int start, int stop, String type) {
         super("Arrythmia");
         this.put(sStart, start);
         this.put(sStop, stop);
@@ -35,24 +35,24 @@ public class Arrhythmia extends ParseObject {
         return getString(sStop);
     }
 
-    public Double getStop() {
-        return getDouble(sStop);
+    public int getStop() {
+        return getInt(sStop);
     }
 
     public void setStop(double stop) {
         put(sStop, stop);
     }
 
-    public Double getStart() {
-        return getDouble(sStart);
+    public int getStart() {
+        return getInt(sStart);
     }
 
     public void setStart(double start) {
         put(sStart, start);
     }
 
-    public Double getDuration() {
-        return getDouble(sDuration);
+    public int getDuration() {
+        return getInt(sDuration);
     }
 
     public void setDuration(double duration) {

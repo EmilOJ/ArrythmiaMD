@@ -7,6 +7,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.helge.arrythmiamd.Models.Arrhythmia;
 import com.helge.arrythmiamd.Models.ECGRecording;
 import com.helge.arrythmiamd.R;
 import com.jjoe64.graphview.series.DataPoint;
@@ -25,16 +26,9 @@ public class ECGViewActivity extends AppCompatActivity {
     private List<Double> mECGdata = new ArrayList<Double>();
     private String mDataString;
     public ECGRecording mEcgRecording;
-
-
-
     private DataPoint[] mDataPoints;
     InputStream is;
 
-
-    public DataPoint[] getmDataPoints() {
-        return mDataPoints;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +40,13 @@ public class ECGViewActivity extends AppCompatActivity {
             String ECG_ID = extras.getString("ECG_ID");
             loadECGData(ECG_ID);
         }
+//        List<Arrhythmia> arrhythmias = new ArrayList<>();
+//        arrhythmias.add(new Arrhythmia(30, 100, "VF"));
+//        arrhythmias.add(new Arrhythmia(200, 400, "AF"));
+//        arrhythmias.add(new Arrhythmia(450, 480, "VF"));
+//        mEcgRecording.setArrhythmias(arrhythmias);
+//        mEcgRecording.saveInBackground();
+
 
         setContentView(R.layout.activity_ecgview);
     }
@@ -59,6 +60,10 @@ public class ECGViewActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public DataPoint[] getmDataPoints() {
+        return mDataPoints;
     }
 }
 
