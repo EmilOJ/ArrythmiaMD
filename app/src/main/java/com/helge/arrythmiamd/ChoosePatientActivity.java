@@ -42,7 +42,7 @@ public class ChoosePatientActivity extends AppCompatActivity {
 
 
 
-        // limit cpr-number input to 10 characters
+        // limit cpr-number input to 10 characters (11 with "-")
         InputFilter[] fa= new InputFilter[1];
         fa[0] = new InputFilter.LengthFilter(11);
         current_patientEditText.setFilters(fa);
@@ -57,6 +57,7 @@ public class ChoosePatientActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String str =  s.toString();
+                // 14 in line below should be removed
                 if(s.length() == 6 || s.length() == 14){
                     str += "-";
                     current_patientEditText.setText(str);

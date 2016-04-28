@@ -1,5 +1,6 @@
 package com.helge.arrythmiamd.ECG;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +11,10 @@ import android.view.ViewGroup;
 
 import com.helge.arrythmiamd.Models.ECGRecording;
 import com.helge.arrythmiamd.R;
+import com.helge.arrythmiamd.Models.Arrhythmia;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -78,15 +82,28 @@ public class graphFragment extends Fragment {
 
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(mDataPoints);
 
-        series.setThickness(1);
+        series.setThickness(2);
         ECGgraph.addSeries(series);
 
+        //AF_series.setColor(Color.argb(0, 0, 0, 0));
+        AF_series.setColor(Color.argb(50, 200, 0, 200));
         AF_series.setDrawBackground(true); // activate the background feature
         AF_series.setBackgroundColor(Color.argb(50, 200, 0, 200));
 
+        //VT_series.setColor(Color.argb(0, 0, 0, 0));
+        VT_series.setColor(Color.argb(50, 0, 200, 200));
         VT_series.setDrawBackground(true); // activate the background feature
         VT_series.setBackgroundColor(Color.argb(50, 0, 200, 200));
 
+        AF_series.setTitle("AF");
+        VT_series.setTitle("VT");
+        ECGgraph.getLegendRenderer().setVisible(true);
+        ECGgraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        //ECGgraph.getLegendRenderer().setFixedPosition(1300,20);
+        ECGgraph.getLegendRenderer().setSpacing(15);
+        ECGgraph.getLegendRenderer().setPadding(30);
+        ECGgraph.getLegendRenderer().setMargin(15);
+        //ECGgraph.getLegendRenderer().setBackgroundColor(fff3f3f3);
 
         ECGgraph.getViewport().setScrollable(true);
         ECGgraph.getViewport().setScalable(true);
@@ -99,6 +116,17 @@ public class graphFragment extends Fragment {
         ECGgraph.getViewport().setMinY(-2);
         ECGgraph.getViewport().setMaxY(2);
 
+        GridLabelRenderer xTitle = ECGgraph.getGridLabelRenderer();
+        xTitle.setHorizontalAxisTitle("Time [s]");
+        //xTitle.setTextSize(20);
+
+        GridLabelRenderer yTitle = ECGgraph.getGridLabelRenderer();
+        yTitle.setVerticalAxisTitle("Amplitude [mV]");
+
+
+
+
         return rootView;
     }
+
 }

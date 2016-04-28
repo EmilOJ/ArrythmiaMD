@@ -8,6 +8,7 @@ import com.parse.ParseObject;
  */
 @ParseClassName("Arrythmia")
 public class Arrhythmia extends ParseObject {
+    //String id = "objectId"; //maybe it should be a float???
     String sStop = "stop";
     String sStart = "start";
     String sDuration = "duration";
