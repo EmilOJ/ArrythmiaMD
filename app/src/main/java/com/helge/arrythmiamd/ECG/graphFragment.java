@@ -18,6 +18,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import com.parse.ParseException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class graphFragment extends Fragment {
@@ -25,7 +26,7 @@ public class graphFragment extends Fragment {
     private static GraphView mECGgraph;
 //    TODO: Compute ymax from ECG signal
     private static int ymax = 2;
-
+    private double mMaxValue;
 
     @Nullable
     @Override
@@ -35,6 +36,7 @@ public class graphFragment extends Fragment {
         mECGgraph = (GraphView) rootView.findViewById(R.id.graph);
 
         mDataPoints = ((ECGViewActivity) getActivity()).mEcgRecording.asDataPoints();
+        mMaxValue = ((ECGViewActivity) getActivity()).mEcgRecording.getMax();
 
         setLayout();
         drawECG();
@@ -93,6 +95,7 @@ public class graphFragment extends Fragment {
         int downSamplingRate = ((ECGViewActivity) getActivity()).mEcgRecording.getDownSamplingRate();
         int adjusted_time = (int) Math.floor(original_time / downSamplingRate);
 
+
         return adjusted_time;
 
     }
@@ -114,8 +117,8 @@ public class graphFragment extends Fragment {
         mECGgraph.getViewport().setMaxX(140);
 
         mECGgraph.getViewport().setYAxisBoundsManual(true);
-        mECGgraph.getViewport().setMinY(-2);
-        mECGgraph.getViewport().setMaxY(2);
+        mECGgraph.getViewport().setMinY(-mMaxValue);
+        mECGgraph.getViewport().setMaxY(mMaxValue);
 
         GridLabelRenderer xTitle = mECGgraph.getGridLabelRenderer();
         xTitle.setHorizontalAxisTitle("Time [s]");
@@ -128,14 +131,14 @@ public class graphFragment extends Fragment {
 
     private void testArrhythmias() {
         LineGraphSeries<DataPoint> AF_series = new LineGraphSeries<DataPoint>(new DataPoint[]{
-                new DataPoint(11, 2),
-                new DataPoint(29, 2)
+                new DataPoint(11, mMaxValue),
+                new DataPoint(29, mMaxValue)
         });
         mECGgraph.addSeries(AF_series);
 
         LineGraphSeries<DataPoint> VT_series = new LineGraphSeries<DataPoint>(new DataPoint[]{
-                new DataPoint(76, 2),
-                new DataPoint(95, 2)
+                new DataPoint(76, mMaxValue),
+                new DataPoint(95, mMaxValue)
         });
         mECGgraph.addSeries(VT_series);
 
