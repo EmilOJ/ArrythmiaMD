@@ -8,6 +8,7 @@ import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,6 +32,15 @@ public class ECGRecording extends ParseObject {
     public void setDownSamplingRate(int downSamplingRate) {
         put(sDownSamplingRate, downSamplingRate);
     }
+
+    public double getMax() {
+        List<Double> dataMax = new ArrayList<>(mData);
+        Collections.sort(dataMax); // Sort the arraylist
+        double maxValue = dataMax.get(dataMax.size() - 1);
+
+        return maxValue;
+    }
+
 
     public ECGRecording() {}
 
