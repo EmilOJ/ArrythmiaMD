@@ -46,8 +46,13 @@ public class ECGViewActivity extends AppCompatActivity {
                     ECG_ID = extras.getString("ECG_ID");
                     break;
                 case "arrhythmia":
-                    mArrhythmia = ParseObject.createWithoutData(Arrhythmia.class,
-                            extras.getString("arrhythmiaId"));
+                    ParseQuery<Arrhythmia> query = new ParseQuery<Arrhythmia>(Arrhythmia.class);
+                    query.fromLocalDatastore();
+                    try {
+                        mArrhythmia = query.get(extras.getString("arrhythmiaId"));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     ECG_ID = mArrhythmia.getRecordingID();
                     break;
             }
@@ -59,11 +64,13 @@ public class ECGViewActivity extends AppCompatActivity {
     }
 
     public void loadECGData(String id) {
-        mEcgRecording = ParseObject.createWithoutData(ECGRecording.class, id);
-    }
-
-    public DataPoint[] getmDataPoints() {
-        return mDataPoints;
+        ParseQuery<ECGRecording> query = new ParseQuery<ECGRecording>(ECGRecording.class);
+        query.fromLocalDatastore();
+        try {
+            mEcgRecording = query.get(id);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
 

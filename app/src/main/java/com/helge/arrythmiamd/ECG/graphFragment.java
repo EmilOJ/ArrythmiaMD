@@ -82,7 +82,7 @@ public class graphFragment extends Fragment {
         int color;
         if ( arrhythmia.getType().equals("AF")) {
             color = Color.argb(50, 200, 0, 200);
-        } else if (arrhythmia.getType().equals("VF")) {
+        } else if (arrhythmia.getType().equals("VT")) {
             color = Color.argb(50, 0, 200, 200);
         } else {
             color = Color.argb(0, 0, 0, 200);

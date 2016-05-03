@@ -17,6 +17,7 @@ import com.parse.ParseQuery;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,10 +33,12 @@ public class ArrhythmiaAdapter extends BaseExpandableListAdapter {
     public ArrhythmiaAdapter(Context context) {
         this.mContext = context;
 
-        loadObjects();
+        List<String> types = new ArrayList<>();
+        types.add("all");
+        loadObjects(types);
     }
 
-    private void loadObjects() {
+    private void loadObjects(List<String> arrhythmiaType) {
 
         ParseQuery<ECGRecording> query = new ParseQuery(ECGRecording.class);
         query.fromLocalDatastore();
@@ -47,6 +50,9 @@ public class ArrhythmiaAdapter extends BaseExpandableListAdapter {
                 aQuery.fromLocalDatastore();
                 aQuery.orderByAscending("start");
                 aQuery.whereEqualTo("recordingId", ecgID);
+                if (!arrhythmiaType.get(0).equals("all")) {
+                    aQuery.whereContainedIn("type", arrhythmiaType);
+                }
                 List<Arrhythmia> arrhythmias = aQuery.find();
                 mListDataChild.put(ecgID, arrhythmias);
             }
@@ -54,6 +60,11 @@ public class ArrhythmiaAdapter extends BaseExpandableListAdapter {
             e.printStackTrace();
         }
     };
+
+    public void queryNewData(List<String> types) {
+        loadObjects(types);
+        this.notifyDataSetChanged();
+    }
 
     @Override
     public Arrhythmia getChild(int groupPosition, int childPosititon) {
