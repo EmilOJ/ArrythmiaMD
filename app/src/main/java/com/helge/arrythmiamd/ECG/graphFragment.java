@@ -113,8 +113,8 @@ public class graphFragment extends Fragment {
         mECGgraph.getViewport().setScalable(true);
 
         mECGgraph.getViewport().setXAxisBoundsManual(true);
-        mECGgraph.getViewport().setMinX(1);
-        mECGgraph.getViewport().setMaxX(140);
+
+        setXLimits();
 
         mECGgraph.getViewport().setYAxisBoundsManual(true);
         mECGgraph.getViewport().setMinY(-mMaxValue);
@@ -129,32 +129,23 @@ public class graphFragment extends Fragment {
 
     }
 
-    private void testArrhythmias() {
-        LineGraphSeries<DataPoint> AF_series = new LineGraphSeries<DataPoint>(new DataPoint[]{
-                new DataPoint(11, mMaxValue),
-                new DataPoint(29, mMaxValue)
-        });
-        mECGgraph.addSeries(AF_series);
+    private void setXLimits() {
+        Arrhythmia arrhythmia = null;
+        try {
+            arrhythmia = ((ECGViewActivity) getActivity()).mArrhythmia;
+        } catch (Exception e) {
 
-        LineGraphSeries<DataPoint> VT_series = new LineGraphSeries<DataPoint>(new DataPoint[]{
-                new DataPoint(76, mMaxValue),
-                new DataPoint(95, mMaxValue)
-        });
-        mECGgraph.addSeries(VT_series);
+        }
 
+        if (arrhythmia != null) {
+            int offset = 40;
+            mECGgraph.getViewport().setMinX(adjustTime(arrhythmia.getStart() - offset));
+            mECGgraph.getViewport().setMaxX(adjustTime(arrhythmia.getStart() - offset) + 140);
+        } else {
+            mECGgraph.getViewport().setMinX(1);
+            mECGgraph.getViewport().setMaxX(140);
 
-        //AF_series.setColor(Color.argb(0, 0, 0, 0));
-        AF_series.setColor(Color.argb(50, 200, 0, 200));
-        AF_series.setDrawBackground(true); // activate the background feature
-        AF_series.setBackgroundColor(Color.argb(50, 200, 0, 200));
+        }
 
-        //VT_series.setColor(Color.argb(0, 0, 0, 0));
-        VT_series.setColor(Color.argb(50, 0, 200, 200));
-        VT_series.setDrawBackground(true); // activate the background feature
-        VT_series.setBackgroundColor(Color.argb(50, 0, 200, 200));
-
-        AF_series.setTitle("AF");
-        VT_series.setTitle("VT");
     }
-
 }

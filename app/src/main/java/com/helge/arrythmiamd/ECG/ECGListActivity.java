@@ -37,6 +37,7 @@ public class ECGListActivity extends AppCompatActivity {
 
                 String ECG_ID           = ECGObject.getObjectId();
                 i.putExtra("ECG_ID", ECG_ID);
+                i.putExtra("status", "all");
 
                 startActivity(i);
             }

@@ -5,6 +5,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,7 +70,17 @@ public class ECGRecording extends ParseObject {
     }
 
     public List<Arrhythmia> getArrhythmias() {
-        return getList(sArrhythmias);
+        List<Arrhythmia> aList;
+        ParseQuery<Arrhythmia> query = new ParseQuery<>(Arrhythmia.class);
+        query.fromLocalDatastore();
+        query.whereEqualTo("recordingId", getObjectId());
+        try {
+            aList = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            aList = new ArrayList<>();
+        }
+        return aList;
     }
 
     public void setArrhythmias(List<Arrhythmia> arrhythmias) {

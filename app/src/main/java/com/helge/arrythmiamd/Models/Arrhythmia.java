@@ -55,10 +55,6 @@ public class Arrhythmia extends ParseObject {
         return ecg;
     }
 
-    public String getsStop() {
-        return getString(sStop);
-    }
-
     public int getStop() {
         return getInt(sStop);
     }

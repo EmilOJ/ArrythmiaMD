@@ -1,16 +1,14 @@
 package com.helge.arrythmiamd.Arrhythmias;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 
-import com.helge.arrythmiamd.Models.ECGRecording;
+import com.helge.arrythmiamd.ECG.ECGViewActivity;
+import com.helge.arrythmiamd.Models.Arrhythmia;
 import com.helge.arrythmiamd.R;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class ArrhythmiasListView extends AppCompatActivity {
 
@@ -32,14 +30,16 @@ public class ArrhythmiasListView extends AppCompatActivity {
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Arrhythmia arrhythmia = listAdapter.getChild(groupPosition, childPosition);
+
+                Intent i = new Intent(ArrhythmiasListView.this, ECGViewActivity.class);
+                i.putExtra("status", "arrhythmia");
+                i.putExtra("arrhythmiaId", arrhythmia.getObjectId());
+                startActivity(i);
+
                 return false;
             }
         });
 
     }
-
-
-
-
-
 }

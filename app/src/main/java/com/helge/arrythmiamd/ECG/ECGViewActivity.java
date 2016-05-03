@@ -11,6 +11,7 @@ import com.helge.arrythmiamd.Models.Arrhythmia;
 import com.helge.arrythmiamd.Models.ECGRecording;
 import com.helge.arrythmiamd.R;
 import com.jjoe64.graphview.series.DataPoint;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -26,6 +27,7 @@ public class ECGViewActivity extends AppCompatActivity {
     private List<Double> mECGdata = new ArrayList<Double>();
     private String mDataString;
     public ECGRecording mEcgRecording;
+    public Arrhythmia mArrhythmia;
     private DataPoint[] mDataPoints;
     InputStream is;
 
@@ -37,29 +39,27 @@ public class ECGViewActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String ECG_ID = extras.getString("ECG_ID");
+            String ECG_ID = "";
+            String status = extras.getString("status");
+            switch (status) {
+                case "all":
+                    ECG_ID = extras.getString("ECG_ID");
+                    break;
+                case "arrhythmia":
+                    mArrhythmia = ParseObject.createWithoutData(Arrhythmia.class,
+                            extras.getString("arrhythmiaId"));
+                    ECG_ID = mArrhythmia.getRecordingID();
+                    break;
+            }
+
             loadECGData(ECG_ID);
         }
-//        List<Arrhythmia> arrhythmias = new ArrayList<>();
-//        arrhythmias.add(new Arrhythmia(30, 100, "VF"));
-//        arrhythmias.add(new Arrhythmia(200, 400, "AF"));
-//        arrhythmias.add(new Arrhythmia(450, 480, "VF"));
-//        mEcgRecording.setArrhythmias(arrhythmias);
-//        mEcgRecording.saveInBackground();
-
 
         setContentView(R.layout.activity_ecgview);
     }
 
     public void loadECGData(String id) {
-        ParseQuery<ECGRecording> query = ParseQuery.getQuery(ECGRecording.class);
-
-        try {
-            mEcgRecording = query.get(id);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        mEcgRecording = ParseObject.createWithoutData(ECGRecording.class, id);
     }
 
     public DataPoint[] getmDataPoints() {
