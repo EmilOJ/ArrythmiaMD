@@ -3,14 +3,11 @@ package com.helge.arrythmiamd.Arrhythmias;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 
-import com.helge.arrythmiamd.Models.Arrhythmia;
 import com.helge.arrythmiamd.Models.ECGRecording;
 import com.helge.arrythmiamd.R;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,9 +16,7 @@ public class ArrhythmiasListView extends AppCompatActivity {
 
     ArrhythmiaAdapter listAdapter;
     ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
-    List<ECGRecording> mRecordings;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +35,6 @@ public class ArrhythmiasListView extends AppCompatActivity {
                 return false;
             }
         });
-
-
-
 
     }
 

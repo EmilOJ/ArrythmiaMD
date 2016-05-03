@@ -15,6 +15,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,11 +38,14 @@ public class ArrhythmiaAdapter extends BaseExpandableListAdapter {
     private void loadObjects() {
 
         ParseQuery<ECGRecording> query = new ParseQuery(ECGRecording.class);
+        query.fromLocalDatastore();
         try {
             mRecordings = query.find();
             for (ECGRecording recording : mRecordings) {
                 String ecgID = recording.getObjectId();
                 ParseQuery<Arrhythmia> aQuery = new ParseQuery(Arrhythmia.class);
+                aQuery.fromLocalDatastore();
+                aQuery.orderByAscending("start");
                 aQuery.whereEqualTo("recordingId", ecgID);
                 List<Arrhythmia> arrhythmias = aQuery.find();
                 mListDataChild.put(ecgID, arrhythmias);
@@ -67,9 +71,9 @@ public class ArrhythmiaAdapter extends BaseExpandableListAdapter {
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
         Arrhythmia arrhythmia = getChild(groupPosition, childPosition);
+        DecimalFormat df = new DecimalFormat("#.##");
 
-
-        final String childText = arrhythmia.getType() + " at " + arrhythmia.getStartTime();
+        final String childText = arrhythmia.getType() + " at " + df.format(arrhythmia.getStartTime()) + "s";
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.mContext
@@ -108,8 +112,7 @@ public class ArrhythmiaAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        ECGRecording recording = getGroup(groupPosition);
-        Date timestamp = recording.getCreatedAt();
+        Date timestamp = getGroup(groupPosition).getCreatedAt();
         DateFormat df = new SimpleDateFormat("d MMM yyyy, HH:mm");
 
 

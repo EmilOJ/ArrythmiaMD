@@ -44,6 +44,7 @@ public class Arrhythmia extends ParseObject {
     public ECGRecording getECGRecoridng () {
         ECGRecording ecg;
         ParseQuery<ECGRecording> query = new ParseQuery(ECGRecording.class);
+        query.fromLocalDatastore();
         query.whereEqualTo("objectId", getRecordingID());
         try {
             ecg = query.getFirst();

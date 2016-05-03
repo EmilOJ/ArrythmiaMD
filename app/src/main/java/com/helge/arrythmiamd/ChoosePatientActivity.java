@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.helge.arrythmiamd.Models.Arrhythmia;
+import com.helge.arrythmiamd.Models.ECGRecording;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -87,6 +89,22 @@ public class ChoosePatientActivity extends AppCompatActivity {
                             // The query was successful.
                             if (objects.size() != 0) {
                                 ArrythmiaMDApplication.gCurrent_patient = objects.get(0);
+
+                                ParseQuery<ECGRecording> query1 = new ParseQuery(ECGRecording.class);
+                                query1.findInBackground(new FindCallback<ECGRecording>() {
+                                    @Override
+                                    public void done(List<ECGRecording> objects, ParseException e) {
+                                        ParseObject.pinAllInBackground(objects);
+                                    }
+                                });
+
+                                ParseQuery<Arrhythmia> query2 = new ParseQuery<>(Arrhythmia.class);
+                                query2.findInBackground(new FindCallback<Arrhythmia>() {
+                                    @Override
+                                    public void done(List<Arrhythmia> objects, ParseException e) {
+                                        ParseObject.pinAllInBackground(objects);
+                                    }
+                                });
                                 Intent i = new Intent(ChoosePatientActivity.this, MainMenuActivity.class);
                                 startActivity(i);
                             } else {
