@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.helge.arrythmiamd.Arrhythmias.ArrhythmiasListView;
 import com.helge.arrythmiamd.ECG.ECGListActivity;
+import com.helge.arrythmiamd.Models.Arrhythmia;
 import com.helge.arrythmiamd.Notes.PatientNotesListActivity;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -30,6 +32,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
 
 
+
         patientinfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +52,8 @@ public class MainMenuActivity extends AppCompatActivity {
         arrhythmiasButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(MainMenuActivity.this, ArrhythmiasListView.class);
+                startActivity(i);
             }
         });
 

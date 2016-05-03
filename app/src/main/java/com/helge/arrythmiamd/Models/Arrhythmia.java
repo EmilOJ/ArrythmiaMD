@@ -1,20 +1,30 @@
 package com.helge.arrythmiamd.Models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 /**
  * Created by emil on 26/04/16.
  */
-@ParseClassName("Arrythmia")
+@ParseClassName("Arrhythmia")
 public class Arrhythmia extends ParseObject {
-    //String id = "objectId"; //maybe it should be a float???
     String sStop = "stop";
     String sStart = "start";
     String sDuration = "duration";
     String sType = "type";
+    String sRecordingId = "recordingId";
 
     public Arrhythmia() {
+    }
+
+    public String getRecordingID() {
+        return getString(sRecordingId);
+    }
+
+    public void setRecordingId(String recordingId) {
+        put(sRecordingId, recordingId);
     }
 
     public Arrhythmia(int start, int stop, String type) {
@@ -31,12 +41,33 @@ public class Arrhythmia extends ParseObject {
         return duration;
     }
 
+    public ECGRecording getECGRecoridng () {
+        ECGRecording ecg;
+        ParseQuery<ECGRecording> query = new ParseQuery(ECGRecording.class);
+        query.whereEqualTo("objectId", getRecordingID());
+        try {
+            ecg = query.getFirst();
+        } catch (ParseException e) {
+            ecg = new ECGRecording();
+        }
+
+        return ecg;
+    }
+
     public String getsStop() {
         return getString(sStop);
     }
 
     public int getStop() {
         return getInt(sStop);
+    }
+
+    public double getStopTime() {
+        return this.getStop() / this.getECGRecoridng().getFs();
+    }
+
+    public double getStartTime() {
+        return this.getStart() / this.getECGRecoridng().getFs();
     }
 
     public void setStop(double stop) {
