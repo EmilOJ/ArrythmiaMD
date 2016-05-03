@@ -137,13 +137,16 @@ public class graphFragment extends Fragment {
 
         }
 
+        int offset = adjustTime(200);
+        int windows_size = adjustTime(700);
+
         if (arrhythmia != null) {
-            int offset = 40;
-            mECGgraph.getViewport().setMinX(adjustTime(arrhythmia.getStart() - offset));
-            mECGgraph.getViewport().setMaxX(adjustTime(arrhythmia.getStart() - offset) + 140);
+
+            mECGgraph.getViewport().setMinX(adjustTime(arrhythmia.getStart())- offset);
+            mECGgraph.getViewport().setMaxX(adjustTime(arrhythmia.getStart()) - offset + windows_size);
         } else {
             mECGgraph.getViewport().setMinX(1);
-            mECGgraph.getViewport().setMaxX(140);
+            mECGgraph.getViewport().setMaxX(windows_size);
 
         }
 
