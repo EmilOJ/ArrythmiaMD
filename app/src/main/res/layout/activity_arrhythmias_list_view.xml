@@ -32,6 +32,7 @@
                 android:textOn="VT"
                 android:textOff="VT"
                 android:onClick="onToggle"
+                android:checked="true"
                 android:id="@+id/VTButton" />
 
             <ToggleButton
@@ -40,6 +41,7 @@
                 android:textOn="AF"
                 android:textOff="AF"
                 android:onClick="onToggle"
+                android:checked="true"
                 android:id="@+id/AFButton" />
 
     </RadioGroup>
