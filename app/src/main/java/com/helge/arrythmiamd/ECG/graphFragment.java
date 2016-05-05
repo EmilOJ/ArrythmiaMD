@@ -91,9 +91,10 @@ public class graphFragment extends Fragment {
         return color;
     }
 
-    private int adjustTime(int original_time) {
+    private double adjustTime(int original_time) {
         int downSamplingRate = ((ECGViewActivity) getActivity()).mEcgRecording.getDownSamplingRate();
-        int adjusted_time = (int) Math.floor(original_time / downSamplingRate);
+        double adjusted_time = original_time /((ECGViewActivity) getActivity()).mEcgRecording.getFs();
+
 
 
         return adjusted_time;
@@ -101,13 +102,11 @@ public class graphFragment extends Fragment {
     }
 
     private void setLayout() {
-        mECGgraph.getLegendRenderer().setVisible(true);
-        mECGgraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        //ECGgraph.getLegendRenderer().setFixedPosition(1300,20);
-        mECGgraph.getLegendRenderer().setSpacing(15);
-        mECGgraph.getLegendRenderer().setPadding(30);
-        mECGgraph.getLegendRenderer().setMargin(15);
-        //ECGgraph.getLegendRenderer().setBackgroundColor(fff3f3f3);
+        //mECGgraph.getLegendRenderer().setVisible(true);
+        //mECGgraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        //mECGgraph.getLegendRenderer().setSpacing(15);
+        //mECGgraph.getLegendRenderer().setPadding(30);
+        //mECGgraph.getLegendRenderer().setMargin(15);
 
         mECGgraph.getViewport().setScrollable(true);
         mECGgraph.getViewport().setScalable(true);
@@ -119,6 +118,7 @@ public class graphFragment extends Fragment {
         mECGgraph.getViewport().setYAxisBoundsManual(true);
         mECGgraph.getViewport().setMinY(-mMaxValue);
         mECGgraph.getViewport().setMaxY(mMaxValue);
+
 
         GridLabelRenderer xTitle = mECGgraph.getGridLabelRenderer();
         xTitle.setHorizontalAxisTitle("Time [s]");
@@ -137,15 +137,15 @@ public class graphFragment extends Fragment {
 
         }
 
-        int offset = adjustTime(200);
-        int windows_size = adjustTime(700);
+        double offset = adjustTime(360);
+        double windows_size = adjustTime(1400);
 
         if (arrhythmia != null) {
 
             mECGgraph.getViewport().setMinX(adjustTime(arrhythmia.getStart())- offset);
             mECGgraph.getViewport().setMaxX(adjustTime(arrhythmia.getStart()) - offset + windows_size);
         } else {
-            mECGgraph.getViewport().setMinX(1);
+            mECGgraph.getViewport().setMinX(0);
             mECGgraph.getViewport().setMaxX(windows_size);
 
         }

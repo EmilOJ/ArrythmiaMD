@@ -122,12 +122,12 @@ public class ECGRecording extends ParseObject {
         if (mData == null) {
             getAndConvertData();
         }
-        DataPoint[] dataPointsArray = new DataPoint[(int) Math.floor(mData.size() / getDownSamplingRate())];
+        DataPoint[] dataPointsArray = new DataPoint[(int) Math.floor(mData.size()/getDownSamplingRate())];
         int counter = 0;
         for (int i=0; i < mData.size(); i = i + getDownSamplingRate()) {
             double dataPoint = mData.get(i);
             try {
-                dataPointsArray[counter] = new DataPoint(counter, dataPoint);
+                dataPointsArray[counter] = new DataPoint((counter*getDownSamplingRate())/getFs(), dataPoint);
             } catch (Exception e) {
                 int a = 1;
             }
