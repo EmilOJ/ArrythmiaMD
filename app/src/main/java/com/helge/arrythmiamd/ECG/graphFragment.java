@@ -24,8 +24,6 @@ import java.util.List;
 public class graphFragment extends Fragment {
     private static DataPoint[] mDataPoints;
     private static GraphView mECGgraph;
-//    TODO: Compute ymax from ECG signal
-    private static int ymax = 2;
     private double mMaxValue;
 
     @Nullable
@@ -65,8 +63,8 @@ public class graphFragment extends Fragment {
             }
 
             LineGraphSeries arrhythmiaSeries = new LineGraphSeries(new DataPoint[]{
-                    new DataPoint(adjustTime(arrhythmia.getStart()), this.ymax),
-                    new DataPoint(adjustTime(arrhythmia.getStop()), this.ymax),
+                    new DataPoint(adjustTime(arrhythmia.getStart()), this.mMaxValue),
+                    new DataPoint(adjustTime(arrhythmia.getStop()), this.mMaxValue),
             });
 
             arrhythmiaSeries.setColor(getColor(arrhythmia));
