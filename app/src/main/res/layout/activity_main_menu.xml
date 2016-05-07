@@ -16,7 +16,9 @@
         android:id="@+id/patientinfo_button"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="124dp" />
+        android:layout_marginTop="124dp"
+        android:layout_alignLeft="@+id/patientnotes_button"
+        android:layout_alignRight="@+id/patientnotes_button"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -32,7 +34,9 @@
         android:text="Arrhythmias"
         android:id="@+id/arrhythmias_button"
         android:layout_below="@+id/patientnotes_button"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@+id/patientnotes_button"
+        android:layout_alignRight="@+id/patientnotes_button"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -40,7 +44,9 @@
         android:text="Statistics"
         android:id="@+id/statistics_button"
         android:layout_below="@+id/arrhythmias_button"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@+id/patientnotes_button"
+        android:layout_alignRight="@+id/patientnotes_button"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -48,5 +54,7 @@
         android:text="ECG"
         android:id="@+id/ECGButton"
         android:layout_below="@+id/statistics_button"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@+id/patientnotes_button"
+        android:layout_alignRight="@+id/patientnotes_button"/>
 </RelativeLayout>
