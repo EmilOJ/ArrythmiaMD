@@ -1,10 +1,13 @@
 package com.helge.arrythmiamd.ECG;
 
+import android.app.Application;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.helge.arrythmiamd.Models.Arrhythmia;
@@ -17,11 +20,17 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.w3c.dom.Node;
+
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+
+
+
 
 public class ECGViewActivity extends AppCompatActivity {
     private List<Double> mECGdata = new ArrayList<Double>();
@@ -61,6 +70,7 @@ public class ECGViewActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_ecgview);
+
     }
 
     public void loadECGData(String id) {
