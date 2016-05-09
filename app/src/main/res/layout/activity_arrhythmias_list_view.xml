@@ -7,8 +7,16 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/backgroundColor"
     tools:context=".Arrhythmias.ArrhythmiasListView">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/apprhythmia"
+        android:src="@mipmap/apprhythmia"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <ExpandableListView
         android:layout_width="wrap_content"
@@ -24,7 +32,8 @@
         android:orientation="horizontal"
         android:layout_alignParentStart="true"
         android:id="@+id/radioGroup"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/apprhythmia">
 
             <ToggleButton
                 android:layout_width="wrap_content"
