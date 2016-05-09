@@ -31,8 +31,6 @@ public class MainMenuActivity extends AppCompatActivity {
         ECGButton = (Button) findViewById(R.id.ECGButton);
 
 
-
-
         patientinfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +58,8 @@ public class MainMenuActivity extends AppCompatActivity {
         statisticsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(MainMenuActivity.this, Statistics.class);
+                startActivity(i);
             }
         });
 

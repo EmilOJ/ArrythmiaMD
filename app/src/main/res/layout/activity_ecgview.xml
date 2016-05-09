@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/arrhythmia_Legend"
             android:layout_gravity="top|right"
-            android:src="@drawable/legend"
+
             tools:ignore="ContentDescription" />
     </FrameLayout>
 
