@@ -37,7 +37,7 @@ public class ChoosePatientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_patient);
 
         current_patientEditText = (EditText) findViewById(R.id.current_patient);
-        current_patientEditText.setText("111100-1111");
+//        current_patientEditText.setText("111100-1111");
 
         choose = (Button) findViewById(R.id.choose_done);
 

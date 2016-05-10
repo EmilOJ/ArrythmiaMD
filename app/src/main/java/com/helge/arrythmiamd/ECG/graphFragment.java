@@ -46,6 +46,7 @@ public class graphFragment extends Fragment {
 
     private void drawECG() {
         LineGraphSeries<DataPoint> ECGseries = new LineGraphSeries<DataPoint>(mDataPoints);
+        ECGseries.setColor(Color.argb(255,0,0,0));
         ECGseries.setThickness(2);
         mECGgraph.addSeries(ECGseries);
     }
@@ -79,9 +80,9 @@ public class graphFragment extends Fragment {
     private int getColor(Arrhythmia arrhythmia) {
         int color;
         if ( arrhythmia.getType().equals("AF")) {
-            color = Color.argb(50, 200, 0, 200);
+            color = Color.argb(150, 0, 102, 204);
         } else if (arrhythmia.getType().equals("VT")) {
-            color = Color.argb(50, 0, 200, 200);
+            color = Color.argb(50, 102, 178, 255);
         } else {
             color = Color.argb(0, 0, 0, 200);
         }
@@ -105,6 +106,7 @@ public class graphFragment extends Fragment {
         //mECGgraph.getLegendRenderer().setSpacing(15);
         //mECGgraph.getLegendRenderer().setPadding(30);
         //mECGgraph.getLegendRenderer().setMargin(15);
+
 
         mECGgraph.getViewport().setScrollable(true);
         mECGgraph.getViewport().setScalable(true);

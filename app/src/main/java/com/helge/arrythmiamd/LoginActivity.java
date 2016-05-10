@@ -30,18 +30,18 @@ public class LoginActivity extends AppCompatActivity {
         final EditText etPassword = (EditText) findViewById(R.id.etPassword);
         final Button bLogin = (Button) findViewById(R.id.bLogin);
         final ProgressBar spinner = (ProgressBar) findViewById(R.id.progressBar);
-        final Button goButton = (Button) findViewById(R.id.goButton);
+//        final Button goButton = (Button) findViewById(R.id.goButton);
 
-        assert goButton != null;
+//        assert goButton != null;
         fetchNotes();
 
-        goButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, ChoosePatientActivity.class);
-                startActivity(i);
-            }
-        });
+//        goButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(LoginActivity.this, ChoosePatientActivity.class);
+//                startActivity(i);
+//            }
+//        });
 
 
         assert bLogin != null;
@@ -62,7 +62,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
                             // Hooray! The user is logged in.
-                            Toast.makeText(LoginActivity.this, "JUHUU", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(LoginActivity.this, ChoosePatientActivity.class);
+                            startActivity(i);
                         } else {
                             runOnUiThread(new Runnable() {
                                 @Override
