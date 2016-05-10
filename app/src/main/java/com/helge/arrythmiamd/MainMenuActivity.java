@@ -16,7 +16,7 @@ public class MainMenuActivity extends AppCompatActivity {
     Button patientinfoButton;
     Button patientnotesButton;
     Button arrhythmiasButton;
-    Button statisticsButton;
+//    Button statisticsButton;
     Button ECGButton;
 
     @Override
@@ -27,7 +27,7 @@ public class MainMenuActivity extends AppCompatActivity {
         patientinfoButton = (Button) findViewById(R.id.patientinfo_button);
         patientnotesButton = (Button) findViewById(R.id.patientnotes_button);
         arrhythmiasButton = (Button) findViewById(R.id.arrhythmias_button);
-        statisticsButton = (Button) findViewById(R.id.statistics_button);
+//        statisticsButton = (Button) findViewById(R.id.statistics_button);
         ECGButton = (Button) findViewById(R.id.ECGButton);
 
 
@@ -55,13 +55,13 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        statisticsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainMenuActivity.this, Statistics.class);
-                startActivity(i);
-            }
-        });
+//        statisticsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(MainMenuActivity.this, Statistics.class);
+//                startActivity(i);
+//            }
+//        });
 
         ECGButton.setOnClickListener(new View.OnClickListener() {
             @Override
