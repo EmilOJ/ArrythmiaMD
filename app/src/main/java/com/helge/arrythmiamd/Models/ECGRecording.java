@@ -72,7 +72,6 @@ public class ECGRecording extends ParseObject {
     public List<Arrhythmia> getArrhythmias() {
         List<Arrhythmia> aList;
         ParseQuery<Arrhythmia> query = new ParseQuery<>(Arrhythmia.class);
-        query.fromLocalDatastore();
         query.whereEqualTo("recordingId", getObjectId());
         try {
             aList = query.find();

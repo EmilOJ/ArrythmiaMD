@@ -41,13 +41,13 @@ public class ArrhythmiaAdapter extends BaseExpandableListAdapter {
     private void loadObjects(List<String> arrhythmiaType) {
 
         ParseQuery<ECGRecording> query = new ParseQuery(ECGRecording.class);
+        query.orderByDescending("createdAt");
         query.fromLocalDatastore();
         try {
             mRecordings = query.find();
             for (ECGRecording recording : mRecordings) {
                 String ecgID = recording.getObjectId();
                 ParseQuery<Arrhythmia> aQuery = new ParseQuery(Arrhythmia.class);
-                aQuery.fromLocalDatastore();
                 aQuery.orderByAscending("start");
                 aQuery.whereEqualTo("recordingId", ecgID);
                 if (!arrhythmiaType.get(0).equals("all")) {

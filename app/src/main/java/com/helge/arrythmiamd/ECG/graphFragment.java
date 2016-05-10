@@ -63,9 +63,12 @@ public class graphFragment extends Fragment {
                 e.printStackTrace();
             }
 
+            double astart = adjustTime(arrhythmia.getStart());
+            double astop = adjustTime(arrhythmia.getStop());
+
             LineGraphSeries arrhythmiaSeries = new LineGraphSeries(new DataPoint[]{
-                    new DataPoint(adjustTime(arrhythmia.getStart()), this.mMaxValue),
-                    new DataPoint(adjustTime(arrhythmia.getStop()), this.mMaxValue),
+                    new DataPoint(adjustTime(arrhythmia.getStart()), this.mMaxValue-0.1),
+                    new DataPoint(adjustTime(arrhythmia.getStop()), this.mMaxValue-0.1),
             });
 
             arrhythmiaSeries.setColor(getColor(arrhythmia));
