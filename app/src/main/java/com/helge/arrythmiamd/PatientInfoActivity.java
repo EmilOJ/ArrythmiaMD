@@ -41,7 +41,15 @@ public class PatientInfoActivity extends AppCompatActivity {
 
         // Medicin that patient takes
         TextView textView8 = (TextView) findViewById(R.id.textView8);
-        textView8.setText(patientMedicin);
+        textView8.setText("ChlorTrimeton");
+        //textView8.setText(patientMedicin);
+        TextView textView9 = (TextView) findViewById(R.id.textView9);
+        textView9.setText("(allergy and hay fever)");
+        TextView textView10 = (TextView) findViewById(R.id.textView10);
+        textView10.setText("Ventolin");
+        //textView8.setText(patientMedicin);
+        TextView textView11 = (TextView) findViewById(R.id.textView11);
+        textView11.setText("(asthma and obstructive pulmonary disease)");
     }
 }
 
