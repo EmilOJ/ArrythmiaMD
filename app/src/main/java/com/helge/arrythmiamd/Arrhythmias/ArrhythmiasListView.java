@@ -12,12 +12,13 @@ import com.helge.arrythmiamd.ECG.ECGViewActivity;
 import com.helge.arrythmiamd.Models.Arrhythmia;
 import com.helge.arrythmiamd.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ArrhythmiasListView extends AppCompatActivity {
-    ToggleButton mAFButton;
-    ToggleButton mVTButton;
+    /*
+        ListView which display all detected arrhythmias grouped by ECG recordings.
+        Uses the ArrhythmiaAdapter for loading and displaying the objects.
+        Redirects to ECGViewActivity (signal diplay) when pressing individual arrhytmias.
+     */
+
     RadioGroup mButtonsGroup;
     ArrhythmiaAdapter listAdapter;
     ExpandableListView expListView;
@@ -28,19 +29,18 @@ public class ArrhythmiasListView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arrhythmias_list_view);
 
-        mAFButton = (ToggleButton) findViewById(R.id.AFButton);
-        mVTButton = (ToggleButton) findViewById(R.id.VTButton);
         mButtonsGroup = (RadioGroup) findViewById(R.id.radioGroup);
-
-        mButtonsGroup.setOnCheckedChangeListener(ToggleListener);
-
         expListView = (ExpandableListView) findViewById(R.id.expandableListView);
 
+
+        //Set the ListAdapter which retrives and processes the data to be displayed
         listAdapter = new ArrhythmiaAdapter(this);
         expListView.setAdapter(listAdapter);
 
 
-
+        // Event handler for showing ECG signal when tapping a specific arrhythmia
+        // on the list
+        mButtonsGroup.setOnCheckedChangeListener(ToggleListener);
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
@@ -48,6 +48,8 @@ public class ArrhythmiasListView extends AppCompatActivity {
 
                 Intent i = new Intent(ArrhythmiasListView.this, ECGViewActivity.class);
                 i.putExtra("status", "arrhythmia");
+                // Include the ID of the arrhythmia in the intent such that the graph
+                // can display the signal around this particular arrhythmia
                 i.putExtra("arrhythmiaId", arrhythmia.getObjectId());
                 startActivity(i);
 
@@ -66,25 +68,4 @@ public class ArrhythmiasListView extends AppCompatActivity {
             }
         }
     };
-
-    private void updateList() {
-        boolean AFchecked = mAFButton.isChecked();
-        boolean VTchecked = mVTButton.isChecked();
-        List<String> types = new ArrayList<>();
-        if (!AFchecked && !VTchecked) {
-            types.add("all");
-        } else {
-            if (AFchecked) {
-                types.add("AF");
-            }
-            if (VTchecked) {
-                types.add("VT");
-            }
-        }
-        listAdapter.queryNewData(types);
-    }
-
-    public void onToggle(View view) {
-        updateList();
-    }
 }

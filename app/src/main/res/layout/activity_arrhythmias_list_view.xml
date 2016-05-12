@@ -35,23 +35,5 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/apprhythmia">
 
-            <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOn="VT"
-                android:textOff="VT"
-                android:onClick="onToggle"
-                android:checked="true"
-                android:id="@+id/VTButton" />
-
-            <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOn="AF"
-                android:textOff="AF"
-                android:onClick="onToggle"
-                android:checked="true"
-                android:id="@+id/AFButton" />
-
     </RadioGroup>
 </RelativeLayout>

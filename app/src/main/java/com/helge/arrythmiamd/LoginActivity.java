@@ -20,6 +20,9 @@ import com.parse.SaveCallback;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
+    /*
+        Lets the MD login with username and password using the ParseUser object
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +33,6 @@ public class LoginActivity extends AppCompatActivity {
         final EditText etPassword = (EditText) findViewById(R.id.etPassword);
         final Button bLogin = (Button) findViewById(R.id.bLogin);
         final ProgressBar spinner = (ProgressBar) findViewById(R.id.progressBar);
-//        final Button goButton = (Button) findViewById(R.id.goButton);
-
-//        assert goButton != null;
-        fetchNotes();
-
-//        goButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(LoginActivity.this, ChoosePatientActivity.class);
-//                startActivity(i);
-//            }
-//        });
-
 
         assert bLogin != null;
         bLogin.setOnClickListener(new View.OnClickListener() {
@@ -50,21 +40,24 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 assert etUsername != null;
                 assert etPassword != null;
+
+                // Retrieve entered username and password
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
+                // Showing loading spinner
                 assert spinner != null;
                 spinner.setVisibility(View.VISIBLE);
                 bLogin.setEnabled(false);
 
-
+                // Login in background and start the ChoosePatientActivity on sucess.
                 ParseUser.logInInBackground(username, password, new LogInCallback() {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
-                            // Hooray! The user is logged in.
                             Intent i = new Intent(LoginActivity.this, ChoosePatientActivity.class);
                             startActivity(i);
                         } else {
+                            // Hide loading spinner if the login was unsuccessful and show a Toast.
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -78,24 +71,5 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
-    }
-
-    private void fetchNotes() {
-        ParseQuery<ParseObject> query_ECG = ParseQuery.getQuery("ECG");
-        ParseQuery<ParseObject> query_notes = ParseQuery.getQuery("Note");
-        query_ECG.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                ParseObject.pinAllInBackground(objects);
-            }
-        });
-
-        query_notes.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                ParseObject.pinAllInBackground(objects);
-            }
-        });
-
     }
 }

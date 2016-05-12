@@ -1,51 +1,32 @@
 package com.helge.arrythmiamd.ECG;
 
-import android.app.Application;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.helge.arrythmiamd.Models.Arrhythmia;
 import com.helge.arrythmiamd.Models.ECGRecording;
 import com.helge.arrythmiamd.R;
-import com.jjoe64.graphview.series.DataPoint;
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import org.w3c.dom.Node;
-
-import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-
-
-
-
 public class ECGViewActivity extends AppCompatActivity {
-    private List<Double> mECGdata = new ArrayList<Double>();
-    private String mDataString;
+    /*
+        Container activity for the ECG-signal graph fragment. Handles incoming startActivity()
+        calls such that the graph displays the appropriate data depending on what the user has
+        requested (either entire signal or specific arrhythmias).
+        Also contains function to load the ECG signal from the database.
+     */
+
     public ECGRecording mEcgRecording;
     public Arrhythmia mArrhythmia;
-    private DataPoint[] mDataPoints;
-    InputStream is;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        // Handles incoming intents and checks for extras. This is used in graphFragment
+        // and determines what should be plotted (all data or specific arrhythmia)
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String ECG_ID = "";

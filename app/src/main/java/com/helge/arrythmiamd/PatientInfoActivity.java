@@ -12,34 +12,29 @@ import com.parse.ParseUser;
 import java.util.List;
 
 public class PatientInfoActivity extends AppCompatActivity {
+    /*
+        Shows info about the current patient. Uses the global gCurrent_patient variable
+        which was set in the ChoosePatientActivity when entering the CPR number.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_info);
 
-        ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.whereEqualTo("CPR", "1111001111");
-
-        query.findInBackground(new FindCallback<ParseUser>() {
-            @Override
-            public void done(List<ParseUser> objects, ParseException e) {
-
-            }
-        });
-        String patientName = ArrythmiaMDApplication.gCurrent_patient.get("name").toString();
-        String patientCPR = ArrythmiaMDApplication.gCurrent_patient.get("CPR").toString();
-        String patientMedicin = ArrythmiaMDApplication.gCurrent_patient.get("medicin").toString();
-
+        // Get patient name and CPR and set it in the appropriate TextViews
         // Name of patient
+        String patientName = ArrythmiaMDApplication.gCurrent_patient.get("name").toString();
         TextView textView6 = (TextView) findViewById(R.id.textView6);
         textView6.setText(patientName);
-
-        // cpr-number
+        // CPR-number
+        String patientCPR = ArrythmiaMDApplication.gCurrent_patient.get("CPR").toString();
         TextView textView7 = (TextView) findViewById(R.id.textView7);
         textView7.setText(patientCPR);
 
-        // Medicin that patient takes
+
+        // Medicine that patient takes
+        // Currently hardcoded. It should be implemented as a database object.
         TextView textView8 = (TextView) findViewById(R.id.textView8);
         textView8.setText("ChlorTrimeton");
         //textView8.setText(patientMedicin);

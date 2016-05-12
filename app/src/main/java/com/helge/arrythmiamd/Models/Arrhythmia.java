@@ -5,28 +5,31 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-/**
- * Created by emil on 26/04/16.
- */
 @ParseClassName("Arrhythmia")
 public class Arrhythmia extends ParseObject {
+    /*
+        Custom class representing an arrhythmia. Also functions as a ParseObject which provides
+        methods for syncing with the online database.
+
+        Attributes:
+            - start         (position in ECG signal)
+            - stop          (position in ECG signal)
+            - duration      (stop - start)
+            - type          (e.g. "AF" for atrial fibrillation)
+            - recordingID   (id of the corresponding ECG recording - foreign key)
+     */
+
     String sStop = "stop";
     String sStart = "start";
     String sDuration = "duration";
     String sType = "type";
     String sRecordingId = "recordingId";
 
+    // Emtpy constructor necessary for implementing the class as a Parse Object
     public Arrhythmia() {
     }
 
-    public String getRecordingID() {
-        return getString(sRecordingId);
-    }
-
-    public void setRecordingId(String recordingId) {
-        put(sRecordingId, recordingId);
-    }
-
+    // Constructor
     public Arrhythmia(int start, int stop, String type) {
         super("Arrythmia");
         this.put(sStart, start);
@@ -35,14 +38,11 @@ public class Arrhythmia extends ParseObject {
         this.put(sDuration, computeDuration());
     }
 
-    private double computeDuration() {
-        double duration;
-        duration = this.getDouble(sStop) - this.getDouble(sStart);
-        return duration;
-    }
-
-    public ECGRecording getECGRecoridng () {
+    // Returns the ECGRecording object associated with this Arrhythmia
+    // (specified by "recordingID")
+    public ECGRecording getECGRecording() {
         ECGRecording ecg;
+        // Create database query and run it
         ParseQuery<ECGRecording> query = new ParseQuery(ECGRecording.class);
         query.fromLocalDatastore();
         query.whereEqualTo("objectId", getRecordingID());
@@ -55,16 +55,36 @@ public class Arrhythmia extends ParseObject {
         return ecg;
     }
 
+    // Utility function which computes the arrhythmia duration from the start and stop time
+    private double computeDuration() {
+        double duration;
+        duration = this.getDouble(sStop) - this.getDouble(sStart);
+        return duration;
+    }
+
+    // Convert the start time in samples to seconds
+    public double getStartTime() {
+        return this.getStart() / this.getECGRecording().getFs();
+    }
+
+    // Convert the stop time in samples to seconds
+    public double getStopTime() {
+        return this.getStop() / this.getECGRecording().getFs();
+    }
+
+
+    /* All methods below are trivial getters and setters */
+
+    public String getRecordingID() {
+        return getString(sRecordingId);
+    }
+
+    public void setRecordingId(String recordingId) {
+        put(sRecordingId, recordingId);
+    }
+
     public int getStop() {
         return getInt(sStop);
-    }
-
-    public double getStopTime() {
-        return this.getStop() / this.getECGRecoridng().getFs();
-    }
-
-    public double getStartTime() {
-        return this.getStart() / this.getECGRecoridng().getFs();
     }
 
     public void setStop(double stop) {

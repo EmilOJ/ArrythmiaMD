@@ -27,6 +27,11 @@ import android.content.Intent;
 import java.util.List;
 
 public class ChoosePatientActivity extends AppCompatActivity {
+    /*
+        Activity for choosing the patient to examine. When patient CPR is submitted and a patient
+        is found, it finds all the relevant Arrhythmia and ECGRecording objects for that patient
+        and starts downloading it in the background.
+     */
     String patientCPR;
     Button choose;
     EditText current_patientEditText;
@@ -37,19 +42,15 @@ public class ChoosePatientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_patient);
 
         current_patientEditText = (EditText) findViewById(R.id.current_patient);
-//        current_patientEditText.setText("111100-1111");
-
         choose = (Button) findViewById(R.id.choose_done);
 
 
-
-
-        // limit cpr-number input to 10 characters (11 with "-")
+        // Limit CPR-number input to 10 characters (11 with "-")
         InputFilter[] fa= new InputFilter[1];
         fa[0] = new InputFilter.LengthFilter(11);
         current_patientEditText.setFilters(fa);
 
-        // place dash in cpr-number before the last 4 digits
+        // Place dash in CPR-number before the last 4 digits
         current_patientEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -79,21 +80,23 @@ public class ChoosePatientActivity extends AppCompatActivity {
                 assert current_patientEditText != null;
                 patientCPR = current_patientEditText.getText().toString();
 
+                // Create database query and execute in background
                 ParseQuery<ParseUser> query = ParseUser.getQuery();
                 query.whereEqualTo("CPR", patientCPR);
-
                 query.findInBackground(new FindCallback<ParseUser>() {
                     @Override
                     public void done(List<ParseUser> objects, ParseException e) {
                         if (e == null) {
                             // The query was successful.
                             if (objects.size() != 0) {
+                                // Sets the global variable gCurren_patient as the patient
                                 ArrythmiaMDApplication.gCurrent_patient = objects.get(0);
 
                                 ParseQuery<ECGRecording> query1 = new ParseQuery(ECGRecording.class);
                                 query1.findInBackground(new FindCallback<ECGRecording>() {
                                     @Override
                                     public void done(List<ECGRecording> objects, ParseException e) {
+                                        // Save all found ECGRecording objects in local data storage
                                         ParseObject.pinAllInBackground(objects);
                                     }
                                 });
@@ -102,6 +105,7 @@ public class ChoosePatientActivity extends AppCompatActivity {
                                 query2.findInBackground(new FindCallback<Arrhythmia>() {
                                     @Override
                                     public void done(List<Arrhythmia> objects, ParseException e) {
+                                        // Save all found Arrhythmia objects in local data storage
                                         ParseObject.pinAllInBackground(objects);
                                     }
                                 });

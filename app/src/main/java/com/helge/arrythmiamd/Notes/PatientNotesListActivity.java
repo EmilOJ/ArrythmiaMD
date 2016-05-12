@@ -17,9 +17,32 @@ import com.parse.ParseObject;
 import com.parse.ParseQueryAdapter;
 
 public class PatientNotesListActivity extends AppCompatActivity {
+    /*
+        ListView displaying all Notes associated with the current patient. Uses the
+        NotesAdapter for fetching and displaying the notes.
+        Includes a BroadcastReceiver for live-updating the list when new notes arrive.
+     */
 
     private ParseQueryAdapter<ParseObject> notesAdapter;
     ListView notesListView;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_patient_notes_list);
+        notesListView = (ListView) findViewById(R.id.notesListView);
+
+        //Set the ListAdapter which retrives and processes the data to be displayed
+        notesAdapter = new NotesAdapter(this);
+        notesListView.setAdapter(notesAdapter);
+        notesAdapter.loadObjects();
+
+        // Set BroadcastReceiver for live-updating the list when new notes arrive
+        LocalBroadcastManager.getInstance(this).registerReceiver(mFetchtDataReceiver, new IntentFilter("doneFetchingData"));
+    }
+
+    // Reloads the entire list when "doneFetchingData" broadcast is received
     private BroadcastReceiver mFetchtDataReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -27,39 +50,8 @@ public class PatientNotesListActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_notes_list);
 
-
-        notesAdapter = new NotesAdapter(this);
-
-        notesListView = (ListView) findViewById(R.id.notesListView);
-        notesListView.setAdapter(notesAdapter);
-        notesAdapter.loadObjects();
-
-
-
-        notesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent i                = new Intent(NotesListActivity.this, NoteEditActivity.class);
-//                ParseObject noteObject = notesAdapter.getItem(position);
-//                noteObject.pinInBackground();
-//
-//                String noteID           = noteObject.getObjectId();
-//                i.putExtra("noteID", noteID);
-//
-//                startActivity(i);
-            }
-        });
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mFetchtDataReceiver, new IntentFilter("doneFetchingData"));
-
-
-    }
-
+    // Unregisters the BroadcastReceiver on activity desctruction.
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mFetchtDataReceiver);

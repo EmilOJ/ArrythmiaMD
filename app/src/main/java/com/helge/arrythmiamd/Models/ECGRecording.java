@@ -12,84 +12,29 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by emil on 26/04/16.
- */
-
 @ParseClassName("ECGRecording")
 public class ECGRecording extends ParseObject {
+    /*
+        Custom class representing an ECG recording. Also functions as a ParseObject which provides
+        methods for syncing with the online database.
+
+        Attributes:
+            - data              ECG signal data which is saved as a csv in the database
+            - Fs                Sampling frequency
+            - downSamplingRate  Factor determining the amount of downsampling for reducing
+                                computational load
+     */
+
     private List<Double> mData;
     String sData = "data";
     String sFs = "fs";
-    String sStart = "start";
-    String sStop = "stop";
-    String sArrhythmias = "arrhythmias";
     String sDownSamplingRate = "downSamplingRate";
 
-    public int getDownSamplingRate() {
-        return getInt(sDownSamplingRate);
-    }
-
-    public void setDownSamplingRate(int downSamplingRate) {
-        put(sDownSamplingRate, downSamplingRate);
-    }
-
-    public double getMax() {
-        List<Double> dataMax = new ArrayList<>(mData);
-        Collections.sort(dataMax); // Sort the arraylist
-        double maxValue = dataMax.get(dataMax.size() - 1);
-
-        return maxValue;
-    }
-
-
+    // Emtpy constructor necessary for implementing the class as a Parse Object
     public ECGRecording() {}
 
-    public Double getFs() {
-        return getDouble(sFs);
-    }
-
-    public void setFs(int Fs) {
-        put(sFs, Fs);
-    }
-
-    public Double getStart() {
-        return getDouble(sStart);
-    }
-
-    public void setStart(Double start) {
-        put(sStart, start);
-    }
-
-    public Double getStop() {
-        return getDouble(sStop);
-    }
-
-    public void setsStop(Double stop) {
-        put(sStop, stop);
-    }
-
-    public List<Arrhythmia> getArrhythmias() {
-        List<Arrhythmia> aList;
-        ParseQuery<Arrhythmia> query = new ParseQuery<>(Arrhythmia.class);
-        query.whereEqualTo("recordingId", getObjectId());
-        try {
-            aList = query.find();
-        } catch (ParseException e) {
-            e.printStackTrace();
-            aList = new ArrayList<>();
-        }
-        return aList;
-    }
-
-    public void setArrhythmias(List<Arrhythmia> arrhythmias) {
-        put(sArrhythmias, arrhythmias);
-    }
-
-    public void setData(ParseFile data) {
-        put(sData, data);
-    }
-
+    // Method for getting the ECG signal from the Parse database (csv format) and converting
+    // it to a List.
     private void getAndConvertData() {
         String dataString = null;
         try {
@@ -102,12 +47,66 @@ public class ECGRecording extends ParseObject {
 
         for (int i=0; i < dataPairs.size(); i++) {
             try {
-                mData.add(Double.parseDouble(dataPairs.get(i).split(",")[1]));
+                mData.add(Double.parseDouble(dataPairs.get(i)));
             } catch (Exception e) {
 
             }
         }
     }
+
+
+    // Get all Arrhythmia objects associated with this ECG recording.
+    public List<Arrhythmia> getArrhythmias() {
+        List<Arrhythmia> aList;
+        // Create database query and execute it
+        ParseQuery<Arrhythmia> query = new ParseQuery<>(Arrhythmia.class);
+        query.whereEqualTo("recordingId", getObjectId());
+        try {
+            aList = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            aList = new ArrayList<>();
+        }
+        return aList;
+    }
+
+
+    // Converts ECG data to a List<DataPoints> where DataPoints is a data type from the GraphView
+    // library which is used for plotting.
+    // Also downsamples the signal for a more smooth interactive plotting experience.
+    public DataPoint[] asDataPoints() {
+        if (mData == null) {
+            getAndConvertData();
+        }
+        DataPoint[] dataPointsArray = new DataPoint[(int) Math.floor(mData.size()/getDownSamplingRate())];
+        int counter = 0;
+        // The iterator i  in the following loope is iterated with the downsampling rate instead
+        // of 1.
+        for (int i=0; i < mData.size(); i = i + getDownSamplingRate()) {
+            double dataPoint = mData.get(i);
+            try {
+                dataPointsArray[counter] = new DataPoint((counter*getDownSamplingRate())/getFs(), dataPoint);
+            } catch (Exception e) {
+                int a = 1;
+            }
+
+            counter++;
+        }
+
+        return dataPointsArray;
+    }
+
+    // Returns the maximum signal value. Used for setting y-axis ranges when plotting.
+    public double getMax() {
+        List<Double> dataMax = new ArrayList<>(mData);
+        Collections.sort(dataMax); // Sort the arraylist
+        double maxValue = dataMax.get(dataMax.size() - 1);
+
+        return maxValue;
+    }
+
+
+    /* All methods below are trivial getters and setters */
 
     public List<Double> getData() {
         if (mData == null) {
@@ -117,24 +116,24 @@ public class ECGRecording extends ParseObject {
         return mData;
     }
 
-    public DataPoint[] asDataPoints() {
-        if (mData == null) {
-            getAndConvertData();
-        }
-        DataPoint[] dataPointsArray = new DataPoint[(int) Math.floor(mData.size()/getDownSamplingRate())];
-        int counter = 0;
-        for (int i=0; i < mData.size(); i = i + getDownSamplingRate()) {
-            double dataPoint = mData.get(i);
-            try {
-                dataPointsArray[counter] = new DataPoint((counter*getDownSamplingRate())/getFs(), dataPoint);
-            } catch (Exception e) {
-                int a = 1;
-            }
-
-
-            counter++;
-        }
-
-        return dataPointsArray;
+    public Double getFs() {
+        return getDouble(sFs);
     }
+
+    public void setFs(int Fs) {
+        put(sFs, Fs);
+    }
+
+    public int getDownSamplingRate() {
+        return getInt(sDownSamplingRate);
+    }
+
+    public void setDownSamplingRate(int downSamplingRate) {
+        put(sDownSamplingRate, downSamplingRate);
+    }
+
+    public void setData(ParseFile data) {
+        put(sData, data);
+    }
+
 }

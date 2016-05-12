@@ -14,13 +14,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by emil on 25/04/16.
- */
 public class ECGAdapter extends ParseQueryAdapter {
+    /*
+        Loads ECGRecordings from Parse server and processes them for
+        displaying in ECGListActivity.
+        Extends the Parse API ParseQueryAdapter which makes getting
+        and displaying data from the database very simple.
+     */
+
     public ECGAdapter(Context context) {
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery create() {
+                // Query database for all ECG recordings
                 ParseQuery query = new ParseQuery("ECGRecording");
                 query.orderByDescending("createdAt");
                 query.fromLocalDatastore();
@@ -29,7 +34,7 @@ public class ECGAdapter extends ParseQueryAdapter {
         });
     }
 
-    // Customize the layout by overriding getItemView
+    // Set and inflate each item on the list and set custom text (timestamp)
     @Override
     public View getItemView(ParseObject object, View v, ViewGroup parent) {
         if (v == null) {
