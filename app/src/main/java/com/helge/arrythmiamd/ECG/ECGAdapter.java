@@ -15,13 +15,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ECGAdapter extends ParseQueryAdapter {
-    /*
-        Loads ECGRecordings from Parse server and processes them for
+    /*  Loads ECGRecordings from Parse server and processes them for
         displaying in ECGListActivity.
         Extends the Parse API ParseQueryAdapter which makes getting
         and displaying data from the database very simple.
      */
-
     public ECGAdapter(Context context) {
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery create() {
@@ -33,7 +31,6 @@ public class ECGAdapter extends ParseQueryAdapter {
             }
         });
     }
-
     // Set and inflate each item on the list and set custom text (timestamp)
     @Override
     public View getItemView(ParseObject object, View v, ViewGroup parent) {
@@ -43,7 +40,6 @@ public class ECGAdapter extends ParseQueryAdapter {
         super.getItemView(object, v, parent);
 
         TextView timestampView = (TextView) v.findViewById(R.id.timestamp);
-
         Date timestamp = object.getCreatedAt();
         DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
         timestampView.setText(df.format(timestamp));
