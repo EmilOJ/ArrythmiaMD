@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 spinner.setVisibility(View.VISIBLE);
                 bLogin.setEnabled(false);
 
-                // Login in background and start the ChoosePatientActivity on sucess.
+                // Login in background and start the ChoosePatientActivity on success.
                 ParseUser.logInInBackground(username, password, new LogInCallback() {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {

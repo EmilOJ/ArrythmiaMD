@@ -29,9 +29,15 @@ public class Arrhythmia extends ParseObject {
     public Arrhythmia() {
     }
 
-    // Constructor
+    public Arrhythmia(int start, int stop) {
+        super("Arrhythmia");
+        this.put(sStart, start);
+        this.put(sStop, stop);
+        this.put(sDuration, computeDuration());
+    }
+
     public Arrhythmia(int start, int stop, String type) {
-        super("Arrythmia");
+        super("Arrhythmia");
         this.put(sStart, start);
         this.put(sStop, stop);
         this.put(sType, type);

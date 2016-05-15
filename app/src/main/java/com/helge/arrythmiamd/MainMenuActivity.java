@@ -6,9 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.helge.arrythmiamd.Arrhythmias.ArrhythmiasListView;
+import com.helge.arrythmiamd.Arrhythmias.ArrhythmiasListActivity;
 import com.helge.arrythmiamd.ECG.ECGListActivity;
-import com.helge.arrythmiamd.Models.Arrhythmia;
 import com.helge.arrythmiamd.Notes.PatientNotesListActivity;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -17,8 +16,8 @@ public class MainMenuActivity extends AppCompatActivity {
         activity.
      */
 
-    Button patientinfoButton;
-    Button patientnotesButton;
+    Button patientInfoButton;
+    Button patientNotesButton;
     Button arrhythmiasButton;
     Button ECGButton;
 
@@ -27,13 +26,13 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        patientinfoButton = (Button) findViewById(R.id.patientinfo_button);
-        patientnotesButton = (Button) findViewById(R.id.patientnotes_button);
+        patientInfoButton = (Button) findViewById(R.id.patientinfo_button);
+        patientNotesButton = (Button) findViewById(R.id.patientnotes_button);
         arrhythmiasButton = (Button) findViewById(R.id.arrhythmias_button);
         ECGButton = (Button) findViewById(R.id.ECGButton);
 
 
-        patientinfoButton.setOnClickListener(new View.OnClickListener() {
+        patientInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainMenuActivity.this, PatientInfoActivity.class);
@@ -41,7 +40,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        patientnotesButton.setOnClickListener(new View.OnClickListener() {
+        patientNotesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainMenuActivity.this, PatientNotesListActivity.class);
@@ -52,7 +51,7 @@ public class MainMenuActivity extends AppCompatActivity {
         arrhythmiasButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainMenuActivity.this, ArrhythmiasListView.class);
+                Intent i = new Intent(MainMenuActivity.this, ArrhythmiasListActivity.class);
                 startActivity(i);
             }
         });

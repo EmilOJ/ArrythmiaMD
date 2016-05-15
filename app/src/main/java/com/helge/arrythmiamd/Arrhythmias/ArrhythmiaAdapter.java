@@ -93,7 +93,7 @@ public class ArrhythmiaAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
-    // Sets and inflates view for each arrhythia item in the list.
+    // Sets and inflates view for each arrhythmia item in the list.
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {

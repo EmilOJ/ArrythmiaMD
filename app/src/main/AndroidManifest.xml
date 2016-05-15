@@ -43,10 +43,10 @@
         <activity
             android:name=".ECG.ECGViewActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".ECG.graphFragment" />
+        <activity android:name=".ECG.GraphFragment" />
         <activity android:name=".ECG.ECGListActivity" android:screenOrientation="portrait"/>
         <activity android:name=".Notes.PatientNotesListActivity" />
-        <activity android:name=".Arrhythmias.ArrhythmiasListView"></activity>
+        <activity android:name=".Arrhythmias.ArrhythmiasListActivity"></activity>
     </application>
 
 </manifest>

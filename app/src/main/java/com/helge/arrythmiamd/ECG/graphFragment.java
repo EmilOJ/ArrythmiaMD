@@ -19,7 +19,7 @@ import com.parse.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class graphFragment extends Fragment {
+public class GraphFragment extends Fragment {
     /*
         Fragment which plots the ECG-signal using the GraphView library. It contains methods
         for dynamically highlighting arrhythmias and for setting the axis ranges appropriately
@@ -28,16 +28,16 @@ public class graphFragment extends Fragment {
      */
 
     private DataPoint[] mDataPoints;
-    private GraphView mECGgraph;
+    private GraphView mECGGraph;
     private double mMaxValue;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_graph_fragment, container, false);
-        mECGgraph = (GraphView) rootView.findViewById(R.id.graph);
-        mDataPoints = ((ECGViewActivity) getActivity()).mEcgRecording.asDataPoints();
-        mMaxValue = ((ECGViewActivity) getActivity()).mEcgRecording.getMax();
+        mECGGraph = (GraphView) rootView.findViewById(R.id.graph);
+        mDataPoints = ((ECGViewActivity) getActivity()).mECGRecording.asDataPoints();
+        mMaxValue = ((ECGViewActivity) getActivity()).mECGRecording.getMax();
 
         setLayout();
         drawECG();
@@ -53,14 +53,14 @@ public class graphFragment extends Fragment {
         LineGraphSeries<DataPoint> ECGseries = new LineGraphSeries<DataPoint>(mDataPoints);
         ECGseries.setColor(Color.argb(255,0,0,0));
         ECGseries.setThickness(2);
-        mECGgraph.addSeries(ECGseries);
+        mECGGraph.addSeries(ECGseries);
     }
 
     private void drawArrhythmias() {
         /*
             Draws all arrhythmias associated with the ECG signal.
          */
-        List<Arrhythmia> arrhythmias = ((ECGViewActivity) getActivity()).mEcgRecording.getArrhythmias();
+        List<Arrhythmia> arrhythmias = ((ECGViewActivity) getActivity()).mECGRecording.getArrhythmias();
         List<LineGraphSeries> arrhythmiasSeries = new ArrayList<>();
 
         for (int iArrhythmia = 0; iArrhythmia < arrhythmias.size(); iArrhythmia++) {
@@ -81,7 +81,7 @@ public class graphFragment extends Fragment {
             arrhythmiaSeries.setBackgroundColor(getColor(arrhythmia));
 
             arrhythmiasSeries.add(arrhythmiaSeries);
-            mECGgraph.addSeries(arrhythmiasSeries.get(iArrhythmia));
+            mECGGraph.addSeries(arrhythmiasSeries.get(iArrhythmia));
         }
     }
 
@@ -104,7 +104,7 @@ public class graphFragment extends Fragment {
         /*
             Convert sample numbers to seconds to match the timeline of the plot.
          */
-        double adjusted_time = original_time / ((ECGViewActivity) getActivity()).mEcgRecording.getFs();
+        double adjusted_time = original_time / ((ECGViewActivity) getActivity()).mECGRecording.getFs();
 
         return adjusted_time;
     }
@@ -114,22 +114,22 @@ public class graphFragment extends Fragment {
             Set the layout for the ECG signal. Includes settings for color, thickness
             and axis ranges.
          */
-        mECGgraph.getViewport().setScrollable(true);
-        mECGgraph.getViewport().setScalable(true);
+        mECGGraph.getViewport().setScrollable(true);
+        mECGGraph.getViewport().setScalable(true);
 
-        mECGgraph.getViewport().setXAxisBoundsManual(true);
+        mECGGraph.getViewport().setXAxisBoundsManual(true);
 
         setXLimits();
 
-        mECGgraph.getViewport().setYAxisBoundsManual(true);
-        mECGgraph.getViewport().setMinY(-1);
-        mECGgraph.getViewport().setMaxY(mMaxValue);
+        mECGGraph.getViewport().setYAxisBoundsManual(true);
+        mECGGraph.getViewport().setMinY(-1);
+        mECGGraph.getViewport().setMaxY(mMaxValue);
 
 
-        GridLabelRenderer xTitle = mECGgraph.getGridLabelRenderer();
+        GridLabelRenderer xTitle = mECGGraph.getGridLabelRenderer();
         xTitle.setHorizontalAxisTitle("Time [s]");
 
-        GridLabelRenderer yTitle = mECGgraph.getGridLabelRenderer();
+        GridLabelRenderer yTitle = mECGGraph.getGridLabelRenderer();
         yTitle.setVerticalAxisTitle("Amplitude [mV]");
 
     }
@@ -150,11 +150,11 @@ public class graphFragment extends Fragment {
         double windows_size = adjustTime(1400);
 
         if (arrhythmia != null) {
-            mECGgraph.getViewport().setMinX(adjustTime(arrhythmia.getStart())- offset);
-            mECGgraph.getViewport().setMaxX(adjustTime(arrhythmia.getStart()) - offset + windows_size);
+            mECGGraph.getViewport().setMinX(adjustTime(arrhythmia.getStart())- offset);
+            mECGGraph.getViewport().setMaxX(adjustTime(arrhythmia.getStart()) - offset + windows_size);
         } else {
-            mECGgraph.getViewport().setMinX(0);
-            mECGgraph.getViewport().setMaxX(windows_size);
+            mECGGraph.getViewport().setMinX(0);
+            mECGGraph.getViewport().setMaxX(windows_size);
 
         }
 

@@ -6,9 +6,6 @@ import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-/**
- * Created by emil on 19/04/16.
- */
 public class ArrythmiaMDApplication extends android.app.Application {
     @Override
     public void onCreate() {

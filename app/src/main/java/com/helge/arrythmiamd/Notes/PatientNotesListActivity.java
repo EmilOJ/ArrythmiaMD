@@ -33,28 +33,9 @@ public class PatientNotesListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_patient_notes_list);
         notesListView = (ListView) findViewById(R.id.notesListView);
 
-        //Set the ListAdapter which retrives and processes the data to be displayed
+        //Set the ListAdapter which retrieves and processes the data to be displayed
         notesAdapter = new NotesAdapter(this);
         notesListView.setAdapter(notesAdapter);
         notesAdapter.loadObjects();
-
-        // Set BroadcastReceiver for live-updating the list when new notes arrive
-        LocalBroadcastManager.getInstance(this).registerReceiver(mFetchtDataReceiver, new IntentFilter("doneFetchingData"));
-    }
-
-    // Reloads the entire list when "doneFetchingData" broadcast is received
-    private BroadcastReceiver mFetchtDataReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            notesAdapter.loadObjects();
-        }
-    };
-
-
-    // Unregisters the BroadcastReceiver on activity desctruction.
-    @Override
-    protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mFetchtDataReceiver);
-        super.onDestroy();
     }
 }

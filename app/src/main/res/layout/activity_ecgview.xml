@@ -16,7 +16,7 @@
 
 
         <fragment
-            android:name="com.helge.arrythmiamd.ECG.graphFragment"
+            android:name="com.helge.arrythmiamd.ECG.GraphFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/graph_fragment"

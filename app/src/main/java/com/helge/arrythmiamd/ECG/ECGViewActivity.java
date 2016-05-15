@@ -17,7 +17,7 @@ public class ECGViewActivity extends AppCompatActivity {
         Also contains function to load the ECG signal from the database.
      */
 
-    public ECGRecording mEcgRecording;
+    public ECGRecording mECGRecording;
     public Arrhythmia mArrhythmia;
 
 
@@ -58,7 +58,7 @@ public class ECGViewActivity extends AppCompatActivity {
         ParseQuery<ECGRecording> query = new ParseQuery<ECGRecording>(ECGRecording.class);
         query.fromLocalDatastore();
         try {
-            mEcgRecording = query.get(id);
+            mECGRecording = query.get(id);
         } catch (ParseException e) {
             e.printStackTrace();
         }

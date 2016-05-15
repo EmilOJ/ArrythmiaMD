@@ -12,7 +12,7 @@ import com.helge.arrythmiamd.ECG.ECGViewActivity;
 import com.helge.arrythmiamd.Models.Arrhythmia;
 import com.helge.arrythmiamd.R;
 
-public class ArrhythmiasListView extends AppCompatActivity {
+public class ArrhythmiasListActivity extends AppCompatActivity {
     /*
         ListView which display all detected arrhythmias grouped by ECG recordings.
         Uses the ArrhythmiaAdapter for loading and displaying the objects.
@@ -46,7 +46,7 @@ public class ArrhythmiasListView extends AppCompatActivity {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Arrhythmia arrhythmia = listAdapter.getChild(groupPosition, childPosition);
 
-                Intent i = new Intent(ArrhythmiasListView.this, ECGViewActivity.class);
+                Intent i = new Intent(ArrhythmiasListActivity.this, ECGViewActivity.class);
                 i.putExtra("status", "arrhythmia");
                 // Include the ID of the arrhythmia in the intent such that the graph
                 // can display the signal around this particular arrhythmia
